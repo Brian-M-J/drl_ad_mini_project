@@ -22,7 +22,8 @@ from stable_baselines3.common.monitor import Monitor
 def get_args():
     """Parses command line arguments."""
     parser = argparse.ArgumentParser(description="Train DQN on HighwayEnv environments")
-    parser.add_argument("--env-ids", nargs='+', default=['highway-v0', 'merge-v0', 'roundabout-v0', 'custom-kinematic-v0'],
+    parser.add_argument("--env-ids", nargs='+',
+                        default=['highway-v0', 'merge-v0', 'roundabout-v0', 'intersection-v0', 'exit-v0', 'custom-kinematic-v0', 'two-way-v0', 'u-turn-v0'],
                         help="List of environment IDs to train on")
     parser.add_argument("--custom-env-id", type=str, default="custom-kinematic-v0",
                         help="ID of the custom environment to use")
