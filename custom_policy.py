@@ -19,9 +19,13 @@ class DuelingMlpFeaturesExtractor(BaseFeaturesExtractor):
         input_dim = observation_space.shape[0]
         # Example MLP: Adjust layer sizes as needed
         self.net = nn.Sequential(
-            nn.Linear(input_dim, 128),
+            nn.Linear(input_dim, 256), # 1st Hidden Layer
             nn.ReLU(),
-            nn.Linear(128, features_dim),
+            nn.Linear(256, 256),      # 2nd Hidden Layer
+            nn.ReLU(),
+            nn.Linear(256, 256),      # 3rd Hidden Layer
+            nn.ReLU(),
+            nn.Linear(256, features_dim), # Output Layer (features_dim)
             nn.ReLU()
         )
 

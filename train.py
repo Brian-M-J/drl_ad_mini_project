@@ -133,7 +133,7 @@ def main():
         env_fns.append(lambda id=env_id, cfg=current_config: Monitor(gym.make(id, config=cfg)))
 
     # Create the vectorized environment
-    vec_env = vec_env_cls(env_fns, start_method='fork') # 'fork' often needed for SubprocVecEnv
+    vec_env = vec_env_cls(env_fns)
 
     # --- Callbacks ---
     checkpoint_callback = CheckpointCallback(
