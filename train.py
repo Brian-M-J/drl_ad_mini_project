@@ -23,7 +23,7 @@ def get_args():
     """Parses command line arguments."""
     parser = argparse.ArgumentParser(description="Train DQN on HighwayEnv environments")
     parser.add_argument("--env-ids", nargs='+',
-                        default=['highway-v0', 'merge-v0', 'roundabout-v0', 'intersection-v0', 'exit-v0', 'custom-kinematic-v0', 'two-way-v0', 'u-turn-v0'],
+                        default=['highway-v0', 'merge-v0', 'roundabout-v0', 'intersection-v1', 'exit-v0', 'custom-kinematic-v0', 'two-way-v0', 'u-turn-v0'],
                         help="List of environment IDs to train on")
     parser.add_argument("--custom-env-id", type=str, default="custom-kinematic-v0",
                         help="ID of the custom environment to use")
@@ -145,10 +145,12 @@ def main():
         save_vecnormalize=True, # Save normalization stats if VecNormalize wrapper is used
     )
 
-    # Evaluation environment (use the first env type for simplicity in eval callback)
-    # For more rigorous evaluation across all types, use the evaluate.py script
+    # Evaluation environment: Wrap the single env in the same VecEnv type as training
     eval_env_id = args.env_ids[0]
-    eval_env = Monitor(gym.make(eval_env_id, config=common_config))
+    # Use the same vec_env_cls determined earlier (SubprocVecEnv or DummyVecEnv)
+    # Create a list containing one function to create the eval env
+    eval_env_fns = [lambda: Monitor(gym.make(eval_env_id, config=common_config))]
+    eval_env = vec_env_cls(eval_env_fns) # Wrap in the same VecEnv class (n_envs=1 implicitly)
     eval_callback = EvalCallback(
         eval_env,
         best_model_save_path=os.path.join(log_path, "best_model"),

@@ -156,7 +156,7 @@ def main():
     parser = argparse.ArgumentParser(description="Evaluate DQN on HighwayEnv environments")
     parser.add_argument("--model-path", type=str, required=True, help="Path to the saved model (.zip file)")
     parser.add_argument("--env-ids", nargs='+',
-                        default=['highway-v0', 'merge-v0', 'roundabout-v0', 'intersection-v0', 'exit-v0', 'custom-kinematic-v0', 'two-way-v0', 'u-turn-v0'],
+                        default=['highway-v0', 'merge-v0', 'roundabout-v0', 'intersection-v1', 'exit-v0', 'custom-kinematic-v0', 'two-way-v0', 'u-turn-v0'],
                         help="List of environment IDs to evaluate on")
     parser.add_argument("--n-eval-episodes", type=int, default=20, help="Number of episodes per environment")
     parser.add_argument("--seed", type=int, default=123, help="Base random seed for evaluation")
